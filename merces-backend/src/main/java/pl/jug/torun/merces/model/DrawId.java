@@ -2,12 +2,17 @@ package pl.jug.torun.merces.model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-public class DrawId {
+import java.io.Serializable;
 
-    final private String eventId;
-    final private String winnerName;
-    final private String awardName;
+@Document
+public class DrawId implements Serializable {
+
+    private String eventId;
+    private String winnerName;
+    private String awardName;
+
+    public DrawId() {
+    }
 
     public DrawId(String eventId, String winnerName, String awardName) {
         this.eventId = eventId;

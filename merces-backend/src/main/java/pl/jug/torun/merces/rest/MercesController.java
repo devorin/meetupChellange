@@ -58,7 +58,6 @@ public class MercesController {
 
     @RequestMapping(value = "/draw", method = RequestMethod.POST)
     public ResultDraw draw(@RequestBody DrawRequest drawRequest) {
-
         List<Member> memberList = getMembers(drawRequest.getEventId());
         AwardEvent award = awardRepository.findOne(drawRequest.getAwardEventId());
 
@@ -67,10 +66,13 @@ public class MercesController {
 
         Member winner = memberList.get(winnerIndex);
 
-        Long awardWon = resultDrawRepository.countByEventIdAndAwardEventId(drawRequest.getEventId(), award.getId().toString());
-        if (awardWon > 0) {
-            throw new RuntimeException("Award is won");
-        }
+//        Long awardWon = resultDrawRepository.countByEventIdAndAwardEventId(
+//                drawRequest.getEventId(),
+//                award.getId().toString()
+//        );
+//        if (awardWon > 0) {
+//            throw new RuntimeException("Award is won");
+//        }
 
         DrawId drawId = new DrawId(drawRequest.getEventId(), winner.getName(), award.getName());
 
@@ -84,6 +86,30 @@ public class MercesController {
 
         resultDrawRepository.save(resultDraw);
 
+        return resultDraw;
+    }
+
+    @RequestMapping(value = "/draw/accept", method = RequestMethod.POST)
+    public ResultDraw drawAccept(@RequestBody DrawId drawId) {
+        ResultDraw resultDraw = resultDrawRepository.findOne(drawId);
+        if (resultDraw == null) {
+            throw new RuntimeException("buum");
+        }
+
+        resultDraw.setStatus(DrawStatus.ACCEPT);
+        resultDrawRepository.save(resultDraw);
+        return resultDraw;
+    }
+
+    @RequestMapping(value = "/draw/reject", method = RequestMethod.POST)
+    public ResultDraw drawReject(@RequestBody DrawId drawId) {
+        ResultDraw resultDraw = resultDrawRepository.findOne(drawId);
+        if (resultDraw == null) {
+            throw new RuntimeException("buum");
+        }
+
+        resultDraw.setStatus(DrawStatus.REJECT);
+        resultDrawRepository.save(resultDraw);
         return resultDraw;
     }
 

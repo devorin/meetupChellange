@@ -5,6 +5,7 @@
  */
 package pl.jug.torun.merces.rest;
 
+import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +16,7 @@ import pl.jug.torun.merces.meetup.model.Event;
 import pl.jug.torun.merces.meetup.model.EventList;
 import pl.jug.torun.merces.meetup.model.EventMemberList;
 import pl.jug.torun.merces.meetup.model.Member;
+import pl.jug.torun.merces.repository.AwardDictionaryRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -24,6 +26,8 @@ public class MercesController {
 
     @Autowired
     MeetupClient meetupClient;
+
+    AwardDictionaryRepository dictionaryRepository;
 
     @RequestMapping("/events")
     public List<Event> getEvents(@RequestParam("groupName") String groupName) {
@@ -38,5 +42,12 @@ public class MercesController {
                 .stream()
                 .map(eventMember -> eventMember.getMember())
                 .collect(Collectors.toList());
+    }
+
+    @RequestMapping("/awards_dictionary")
+    public List<String> getAwardsDictionary() {
+        List<String> dictionary = Lists.newArrayList();
+        dictionaryRepository.findAll().forEach(word -> dictionary.add(word.getName()));
+        return dictionary;
     }
 }

@@ -1,13 +1,14 @@
 package pl.jug.torun.merces.model;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Award {
+public class AwardEvent {
 
     @Id
-    private Integer id;
+    private ObjectId id;
 
     private String name;
 
@@ -15,11 +16,11 @@ public class Award {
 
     private String winnerName;
 
-    public Integer getId() {
+    public ObjectId getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(ObjectId id) {
         this.id = id;
     }
 

@@ -27,6 +27,7 @@ public class MercesController {
     @Autowired
     MeetupClient meetupClient;
 
+    @Autowired
     AwardDictionaryRepository dictionaryRepository;
 
     @RequestMapping("/events")
@@ -47,7 +48,11 @@ public class MercesController {
     @RequestMapping("/awards_dictionary")
     public List<String> getAwardsDictionary() {
         List<String> dictionary = Lists.newArrayList();
-        dictionaryRepository.findAll().forEach(word -> dictionary.add(word.getName()));
+	dictionaryRepository.findAll()
+		.forEach(
+			word ->
+				dictionary.add(
+					word.getName()));
         return dictionary;
     }
 }

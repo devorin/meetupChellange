@@ -39,7 +39,7 @@ public class MercesController {
 
     @RequestMapping("/events")
     public List<Event> getEvents(@RequestParam("groupName") String groupName) {
-	EventList eventList = meetupClient.getEvents(groupName);
+        EventList eventList = meetupClient.getEvents(groupName);
         return eventList.getResults();
     }
 
@@ -49,26 +49,26 @@ public class MercesController {
         return eventMemberList.getResults()
                 .stream()
                 .map(eventMember -> eventMember.getMember())
-		.collect(Collectors.toList());
+                .collect(Collectors.toList());
     }
 
     public ResultDraw draw(
-	    @PathVariable("event_id") String eventId,
-	    @PathVariable("award_event_id") ObjectId awardEventId) {
+            @PathVariable("event_id") String eventId,
+            @PathVariable("award_event_id") ObjectId awardEventId) {
 
-	ResultDraw resultDraw = new ResultDraw();
-	resultDraw.setAward(awardRepository.findOne(awardEventId));
-	resultDraw.setEventId(eventId);
-	return resultDraw;
+        ResultDraw resultDraw = new ResultDraw();
+        resultDraw.setAward(awardRepository.findOne(awardEventId));
+        resultDraw.setEventId(eventId);
+        return resultDraw;
     }
 
     @RequestMapping("/awards_dictionary")
     public List<String> getAwardsDictionary() {
-	List<String> dictionary = Lists.newArrayList();
-	dictionaryRepository.findAll()
-		.forEach(word -> dictionary.add(word.getName()));
+        List<String> dictionary = Lists.newArrayList();
+        dictionaryRepository.findAll()
+                .forEach(word -> dictionary.add(word.getName()));
 
-	return dictionary;
+        return dictionary;
     }
 
 }

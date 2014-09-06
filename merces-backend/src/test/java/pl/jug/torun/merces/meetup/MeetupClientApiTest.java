@@ -57,16 +57,15 @@ public class MeetupClientApiTest {
         params.put("group_urlname", GROUP_NAME);
         params.put("status", "upcoming,past");
 
-        when(meetupPath.getUrl("events", params)).thenThrow(new URISyntaxException("INPUT","REASON"));
+        when(meetupPath.getUrl("events", params)).thenThrow(new URISyntaxException("INPUT", "REASON"));
 
         try {
             clientUnderTest.getEvents(GROUP_NAME);
             fail("Exception expected");
-        } catch(MeetupException ex) {
+        } catch (MeetupException ex) {
             assertThat(ex.getMessage()).isEqualTo("Meetup Url not valid");
         }
     }
-
 
 
 }

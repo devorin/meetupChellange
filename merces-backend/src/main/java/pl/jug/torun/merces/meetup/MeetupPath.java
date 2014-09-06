@@ -25,7 +25,7 @@ public class MeetupPath {
     private String key;
 
     public String getUrl(String path) throws URISyntaxException {
-          return getUrl(path, Collections.EMPTY_MAP);
+        return getUrl(path, Collections.EMPTY_MAP);
     }
 
     public String getUrl(String path, Map<String, String> params) throws URISyntaxException {

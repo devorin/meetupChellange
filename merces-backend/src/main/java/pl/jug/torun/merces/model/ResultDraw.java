@@ -20,42 +20,42 @@ public class ResultDraw {
     private Member member;
 
     public ObjectId getId() {
-	return id;
+        return id;
     }
 
     public void setId(ObjectId id) {
-	this.id = id;
+        this.id = id;
     }
 
     public AwardEvent getAward() {
-	return award;
+        return award;
     }
 
     public void setAward(AwardEvent award) {
-	this.award = award;
+        this.award = award;
     }
 
     public DrawStatus getStatus() {
-	return status;
+        return status;
     }
 
     public String getEventId() {
-	return eventId;
+        return eventId;
     }
 
     public void setEventId(String eventId) {
-	this.eventId = eventId;
+        this.eventId = eventId;
     }
 
     public void setStatus(DrawStatus status) {
-	this.status = status;
+        this.status = status;
     }
 
     public Member getMember() {
-	return member;
+        return member;
     }
 
     public void setMember(Member member) {
-	this.member = member;
+        this.member = member;
     }
 }

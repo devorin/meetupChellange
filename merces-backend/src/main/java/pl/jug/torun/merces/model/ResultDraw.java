@@ -12,6 +12,8 @@ public class ResultDraw {
 
     private String eventId;
 
+    private String awardEventId;
+
     private AwardEvent award;
 
     private DrawStatus status;
@@ -32,6 +34,14 @@ public class ResultDraw {
 
     public void setAward(AwardEvent award) {
         this.award = award;
+    }
+
+    public String getAwardEventId() {
+        return awardEventId;
+    }
+
+    public void setAwardEventId(String awardEventId) {
+        this.awardEventId = awardEventId;
     }
 
     public DrawStatus getStatus() {

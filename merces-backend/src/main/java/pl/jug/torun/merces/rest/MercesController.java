@@ -14,6 +14,7 @@ import pl.jug.torun.merces.meetup.model.EventList;
 import pl.jug.torun.merces.meetup.model.EventMemberList;
 import pl.jug.torun.merces.meetup.model.Member;
 import pl.jug.torun.merces.model.AwardEvent;
+import pl.jug.torun.merces.model.DrawId;
 import pl.jug.torun.merces.model.DrawStatus;
 import pl.jug.torun.merces.model.ResultDraw;
 import pl.jug.torun.merces.repository.AwardDictionaryRepository;
@@ -66,9 +67,18 @@ public class MercesController {
 
         Member winner = memberList.get(winnerIndex);
 
+        Long awardWon = resultDrawRepository.countByEventIdAndAwardEventId(drawRequest.getEventId(), award.getId().toString());
+        if (awardWon > 0) {
+            throw new RuntimeException("Award is won");
+        }
+
+        DrawId drawId = new DrawId(drawRequest.getEventId(), winner.getName(), award.getName());
+
         ResultDraw resultDraw = new ResultDraw();
+        resultDraw.setId(drawId);
         resultDraw.setAward(award);
         resultDraw.setEventId(drawRequest.getEventId());
+        resultDraw.setAwardEventId(award.getId().toString());
         resultDraw.setMember(winner);
         resultDraw.setStatus(DrawStatus.NEW);
 
@@ -86,4 +96,8 @@ public class MercesController {
         return dictionary;
     }
 
+    @RequestMapping("/awards_event/{event_id}")
+    public List<AwardEvent> getAwardsEvent(@PathVariable("event_id") String eventId) {
+        return awardRepository.findByEventId(eventId);
+    }
 }

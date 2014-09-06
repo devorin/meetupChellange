@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.util.Collections;
 import java.util.Map;
 
@@ -32,6 +34,12 @@ public class MeetupPath {
         uriBuilder.addParameter("key", key);
         for (Map.Entry<String, String> entry : params.entrySet()) {
             uriBuilder.addParameter(entry.getKey(), entry.getValue());
+        }
+
+        try {
+            return URLDecoder.decode(uriBuilder.toString(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
 
         return uriBuilder.toString();

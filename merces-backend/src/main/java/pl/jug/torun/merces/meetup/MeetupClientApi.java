@@ -25,6 +25,7 @@ public class MeetupClientApi implements MeetupClient {
     public EventList getEvents(String groupName) {
         Map<String, String> params = Maps.newHashMap();
         params.put("group_urlname", groupName);
+        params.put("status", "upcoming,past");
 
         String url;
         try {
@@ -39,6 +40,7 @@ public class MeetupClientApi implements MeetupClient {
 
     @Override
     public List<EventMember> getMembers(Event event) {
+
         throw new UnsupportedOperationException("Not implemented yet");
     }
 

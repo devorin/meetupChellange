@@ -8,20 +8,21 @@ package pl.jug.torun.merces.rest;
 import com.google.common.collect.Lists;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.jug.torun.merces.meetup.MeetupClient;
 import pl.jug.torun.merces.meetup.model.Event;
 import pl.jug.torun.merces.meetup.model.EventList;
 import pl.jug.torun.merces.meetup.model.EventMemberList;
 import pl.jug.torun.merces.meetup.model.Member;
+import pl.jug.torun.merces.model.AwardEvent;
+import pl.jug.torun.merces.model.DrawStatus;
 import pl.jug.torun.merces.model.ResultDraw;
 import pl.jug.torun.merces.repository.AwardDictionaryRepository;
 import pl.jug.torun.merces.repository.AwardEventRepository;
+import pl.jug.torun.merces.repository.ResultDrawRepository;
 
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @RestController
@@ -36,6 +37,8 @@ public class MercesController {
     @Autowired
     AwardEventRepository awardRepository;
 
+    @Autowired
+    ResultDrawRepository resultDrawRepository;
 
     @RequestMapping("/events")
     public List<Event> getEvents(@RequestParam("groupName") String groupName) {
@@ -52,13 +55,27 @@ public class MercesController {
                 .collect(Collectors.toList());
     }
 
+
+    @RequestMapping(value = "/draw/{event_id}/{award_event_id}", method = RequestMethod.POST)
     public ResultDraw draw(
             @PathVariable("event_id") String eventId,
             @PathVariable("award_event_id") ObjectId awardEventId) {
+        List<Member> memberList = getMembers(eventId);
+        AwardEvent award = awardRepository.findOne(awardEventId);
+
+        Random randomGenerator = new Random();
+        Integer winnerIndex = randomGenerator.nextInt(memberList.size());
+
+        Member winner = memberList.get(winnerIndex);
 
         ResultDraw resultDraw = new ResultDraw();
-        resultDraw.setAward(awardRepository.findOne(awardEventId));
+        resultDraw.setAward(award);
         resultDraw.setEventId(eventId);
+        resultDraw.setMember(winner);
+        resultDraw.setStatus(DrawStatus.NEW);
+
+        resultDrawRepository.save(resultDraw);
+
         return resultDraw;
     }
 

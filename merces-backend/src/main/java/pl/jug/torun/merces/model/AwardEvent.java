@@ -14,8 +14,6 @@ public class AwardEvent {
 
     private String eventId;
 
-    private String winnerName;
-
     public ObjectId getId() {
         return id;
     }
@@ -38,13 +36,5 @@ public class AwardEvent {
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
-    }
-
-    public String getWinnerName() {
-        return winnerName;
-    }
-
-    public void setWinnerName(String winnerName) {
-        this.winnerName = winnerName;
     }
 }

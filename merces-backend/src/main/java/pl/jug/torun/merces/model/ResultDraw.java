@@ -1,6 +1,5 @@
 package pl.jug.torun.merces.model;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import pl.jug.torun.merces.meetup.model.Member;
@@ -9,7 +8,7 @@ import pl.jug.torun.merces.meetup.model.Member;
 public class ResultDraw {
 
     @Id
-    private ObjectId id;
+    private DrawId id;
 
     private String eventId;
 
@@ -19,11 +18,11 @@ public class ResultDraw {
 
     private Member member;
 
-    public ObjectId getId() {
+    public DrawId getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(DrawId id) {
         this.id = id;
     }
 

@@ -5,22 +5,21 @@
  */
 package pl.jug.torun.merces.rest;
 
-import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import pl.jug.torun.merces.meetup.MeetupClient;
+import pl.jug.torun.merces.meetup.model.EventList;
 
-/**
- *
- * @author faramir
- */
 @RestController
 public class MercesController {
 
-    private static final String template = "Hello, %s!";
+    @Autowired
+    MeetupClient meetupClient;
 
-    @RequestMapping("/")
-    public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name) {
-        return String.format(template, name);
+    @RequestMapping("/events")
+    public EventList getEvents(@RequestParam("groupName") String groupName) {
+        return meetupClient.getEvents(groupName);
     }
 }

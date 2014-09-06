@@ -10,6 +10,8 @@ public class AwardEvent {
     @Id
     private ObjectId id;
 
+    private String stringId;
+
     private String name;
 
     private String eventId;
@@ -36,5 +38,14 @@ public class AwardEvent {
 
     public void setEventId(String eventId) {
         this.eventId = eventId;
+    }
+
+    public String getStringId() {
+        return stringId;
+    }
+
+    public AwardEvent setStringId(String stringId) {
+        this.stringId = stringId;
+        return this;
     }
 }

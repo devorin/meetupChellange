@@ -124,6 +124,9 @@ public class MercesController {
 
     @RequestMapping("/awards_event/{event_id}")
     public List<AwardEvent> getAwardsEvent(@PathVariable("event_id") String eventId) {
-        return awardRepository.findByEventId(eventId);
+        return awardRepository.findByEventId(eventId)
+                .stream()
+                .map(awardEvent -> awardEvent.setStringId(awardEvent.getId().toString()))
+                .collect(Collectors.toList());
     }
 }

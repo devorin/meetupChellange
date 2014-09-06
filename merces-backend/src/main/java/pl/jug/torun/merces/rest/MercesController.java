@@ -6,7 +6,6 @@
 package pl.jug.torun.merces.rest;
 
 import com.google.common.collect.Lists;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import pl.jug.torun.merces.meetup.MeetupClient;
@@ -56,12 +55,11 @@ public class MercesController {
     }
 
 
-    @RequestMapping(value = "/draw/{event_id}/{award_event_id}", method = RequestMethod.POST)
-    public ResultDraw draw(
-            @PathVariable("event_id") String eventId,
-            @PathVariable("award_event_id") ObjectId awardEventId) {
-        List<Member> memberList = getMembers(eventId);
-        AwardEvent award = awardRepository.findOne(awardEventId);
+    @RequestMapping(value = "/draw", method = RequestMethod.POST)
+    public ResultDraw draw(@RequestBody DrawRequest drawRequest) {
+
+        List<Member> memberList = getMembers(drawRequest.getEventId());
+        AwardEvent award = awardRepository.findOne(drawRequest.getAwardEventId());
 
         Random randomGenerator = new Random();
         Integer winnerIndex = randomGenerator.nextInt(memberList.size());
@@ -70,7 +68,7 @@ public class MercesController {
 
         ResultDraw resultDraw = new ResultDraw();
         resultDraw.setAward(award);
-        resultDraw.setEventId(eventId);
+        resultDraw.setEventId(drawRequest.getEventId());
         resultDraw.setMember(winner);
         resultDraw.setStatus(DrawStatus.NEW);
 

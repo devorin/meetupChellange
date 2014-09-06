@@ -12,7 +12,7 @@ public class AwardEvent {
 
     private String name;
 
-    private Integer eventId;
+    private String eventId;
 
     private String winnerName;
 
@@ -32,11 +32,11 @@ public class AwardEvent {
         this.name = name;
     }
 
-    public Integer getEventId() {
+    public String getEventId() {
         return eventId;
     }
 
-    public void setEventId(Integer eventId) {
+    public void setEventId(String eventId) {
         this.eventId = eventId;
     }
 
